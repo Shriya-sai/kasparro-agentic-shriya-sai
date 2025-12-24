@@ -6,6 +6,18 @@ Responsibility:
 - Normalize it into an internal, stable schema
 - Shield downstream agents from raw input structure
 """
+"""
+Internal schema fields:
+- name
+- brand
+- category
+- ingredients
+- benefits
+- skin_type
+- usage
+- side_effects
+- price_inr
+"""
 
 class ProductParserAgent:
     def __init__(self):
