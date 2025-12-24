@@ -1,20 +1,50 @@
-# Test Render
+# Kasparro Applied AI Engineer Challenge
+Multi-Agent Content Generation System
+
+This repository contains a modular, agent-based content generation system that transforms raw product data into structured marketing content.
+
+---
 
 ## Execution Flow
 
-A
+Raw Product Input
 ↓
-B
+ProductParserAgent
 ↓
-C
+Internal Product Schema
+↓
+QuestionGenerationAgent
+↓
+ContentLogicAgent (Reusable Blocks)
+↓
+TemplateAgents
+↓
+Structured JSON Outputs
 
-shell
+yaml
 Copy code
 
-## Structure
+---
 
-root/
-├── a
-└── b
+## Project Structure
 
+kasparro-agentic-shriya-sai/
+├── agents/
+├── templates/
+├── data/
+├── outputs/
+├── docs/
+├── main.py
+└── README.md
+
+yaml
+Copy code
+
+---
+
+## How to Run
+
+python main.py
+
+nginx
 Copy code
