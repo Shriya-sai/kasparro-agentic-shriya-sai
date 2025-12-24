@@ -96,6 +96,8 @@ Running the system generates three structured outputs:
 
 All outputs are **CMS- and frontend-friendly** and designed for downstream consumption.
 
+LLM failures currently fail fast to surface quality issues; retry policies can be added at the orchestration layer if required.
+
 ---
 
 ## 🧪 Testing & Validation
