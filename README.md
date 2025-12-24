@@ -96,20 +96,28 @@ Running the system generates three structured outputs:
 All outputs are **CMS- and frontend-friendly** and designed for downstream consumption.
 
 ---
+## 🧪 Testing & Validation
+
+The system is tested at the **pipeline level**, focusing on correctness, robustness, and reproducibility rather than isolated unit tests.
+
+### End-to-End Execution Test
+The primary test is running the full orchestration pipeline:
+
 
 ## ▶️ How to Run
 
 ### 1. Install dependencies
-
+```bash
 pip install -r requirements.txt
-
+```
 ### 2. Set environment variables
+```bash
 GROQ_API_KEY=your_api_key_here
-
+```
 ### 3. Run the system
-
+```bash
 python main.py
-
+```
 Successful execution will generate the output JSON files inside the outputs/ directory.
 
 
