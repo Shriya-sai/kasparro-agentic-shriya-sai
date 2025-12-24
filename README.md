@@ -1,47 +1,40 @@
-# Kasparro Applied AI Engineer Challenge
-Multi-Agent Content Generation System
+# Kasparro Applied AI Engineer Challenge  
+## Multi-Agent Content Generation System
 
-This repository contains a modular, agent-based content generation system that transforms raw product data into structured marketing content.
+This repository contains a **modular, agent-based content generation system** designed to transform raw product data into structured marketing content.
 
-The focus of this project is system design, reusable logic blocks, and explicit orchestration rather than prompt-heavy or monolithic AI scripts.
+The focus of this project is **system design, orchestration, and reusability** — not prompt-heavy or monolithic AI scripts.
 
 ---
 
-## Objective
+## 🎯 Objective
 
-Design a production-oriented agentic content system that:
-- Uses clear agent responsibilities
-- Exposes reusable content logic
+Design a production-oriented **agentic content system** that:
+- Uses clear agent boundaries
+- Exposes reusable logic blocks
 - Orchestrates execution explicitly
 - Produces structured, deterministic outputs
 
 ---
 
-## System Overview
+## 🧠 System Overview
 
-The system is composed of multiple agents, each with a single responsibility.
+The system is composed of multiple agents, each with a single responsibility:
 
-ProductParserAgent  
-Normalizes raw product input into an internal schema.
+| Component | Description |
+|---------|-------------|
+| ProductParserAgent | Normalizes raw product input into a stable internal schema |
+| QuestionGenerationAgent | Generates categorized customer questions |
+| ContentLogicAgent | Produces reusable content blocks |
+| TemplateAgents | Assemble page-level outputs |
+| OrchestratorAgent | Controls execution flow and data passing |
+| main.py | Entry point for execution |
 
-QuestionGenerationAgent  
-Generates categorized customer questions.
-
-ContentLogicAgent  
-Produces reusable content blocks.
-
-TemplateAgents  
-Assemble page-level outputs.
-
-OrchestratorAgent  
-Controls execution flow.
-
-main.py  
-Entry point for system execution.
+All agents are coordinated through an explicit orchestration layer.
 
 ---
 
-## Execution Flow
+## 🔁 Execution Flow
 
 Raw Product Input
 ↓
@@ -62,15 +55,16 @@ Copy code
 
 ---
 
-## Project Structure
+## 📂 Project Structure
 
 kasparro-agentic-shriya-sai/
-├── agents/
-├── templates/
-├── data/
-├── outputs/
-├── docs/
-├── main.py
+│
+├── agents/ # Core agent logic
+├── templates/ # Page-level templates
+├── data/ # Raw input data
+├── outputs/ # Generated JSON outputs
+├── docs/ # System documentation
+├── main.py # Entry point
 └── README.md
 
 yaml
@@ -78,52 +72,19 @@ Copy code
 
 ---
 
-## Outputs
+## 📦 Outputs
 
-The system generates three structured JSON files:
+Running the system generates three structured outputs:
 
-faq.json  
-product_page.json  
-comparison_page.json  
+- `faq.json` — Categorized customer FAQs  
+- `product_page.json` — Product overview and details  
+- `comparison_page.json` — Product A vs Product B comparison  
 
-These outputs are designed for consumption by CMS systems or frontend applications.
+These outputs are designed to be **CMS- and frontend-friendly**.
 
 ---
 
-## How to Run
+## ▶️ How to Run
 
+```bash
 python main.py
-
-yaml
-Copy code
-
-Generated outputs will appear in the outputs directory.
-
----
-
-## Design Philosophy
-
-The system prioritizes:
-
-Separation of concerns over monolithic scripts.  
-Reusable content logic over page-specific generation.  
-Explicit orchestration over implicit control flow.  
-Extensible architecture that can support LLM-backed agents later.
-
----
-
-## Documentation
-
-Detailed system design and architectural decisions are available in:
-
-docs/projectdocumentation.md
-
-yaml
-Copy code
-
----
-
-## Closing Note
-
-This project focuses on engineering clarity, maintainability, and system thinking.  
-It is intentionally designed to be understandable, extensible, and production-friendly.
