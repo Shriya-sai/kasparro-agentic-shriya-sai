@@ -1,0 +1,33 @@
+{
+  "page_type": "Comparison",
+  "comparison": {
+    "title": "Product Comparison",
+    "comparison": {
+      "product_a": {
+        "name": "GlowBoost Vitamin C Serum",
+        "price_inr": 699,
+        "ingredients": [
+          "Vitamin C",
+          "Hyaluronic Acid"
+        ],
+        "benefits": [
+          "Brightens skin tone",
+          "Fades dark spots",
+          "Boosts collagen production"
+        ]
+      },
+      "product_b": {
+        "name": "RadiantPlus Vitamin C Serum",
+        "price_inr": 899,
+        "ingredients": [
+          "Vitamin C",
+          "Niacinamide"
+        ],
+        "benefits": [
+          "Brightens skin",
+          "Improves skin texture"
+        ]
+      }
+    }
+  }
+}

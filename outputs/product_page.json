@@ -1,0 +1,37 @@
+{
+  "page_type": "Product",
+  "sections": [
+    {
+      "title": "Product Overview",
+      "content": {
+        "name": "GlowBoost Vitamin C Serum",
+        "brand": "GlowBoost",
+        "category": "Skincare"
+      }
+    },
+    {
+      "title": "Key Benefits",
+      "items": [
+        "Brightens skin tone",
+        "Fades dark spots",
+        "Boosts collagen production"
+      ]
+    },
+    {
+      "title": "How to Use",
+      "instructions": "Apply 2\u20133 drops in the morning before sunscreen."
+    },
+    {
+      "title": "Safety & Side Effects",
+      "notes": "Mild tingling for sensitive skin.",
+      "skin_type": [
+        "Oily",
+        "Combination"
+      ]
+    },
+    {
+      "title": "Pricing",
+      "price_inr": 699
+    }
+  ]
+}
