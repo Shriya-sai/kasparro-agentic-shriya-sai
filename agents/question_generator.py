@@ -1,0 +1,49 @@
+"""
+QuestionGenerationAgent
+
+Responsibility:
+- Generate categorized customer questions
+- Based on internal product schema
+- Output structured, reusable question sets
+"""
+
+class QuestionGenerationAgent:
+    def __init__(self):
+        pass
+
+    def generate(self, product: dict) -> dict:
+        """
+        Generates categorized questions for a given product.
+        """
+
+        name = product.get("name")
+
+        questions = {
+            "Informational": [
+                f"What is {name}?",
+                "What are the key ingredients in this product?",
+                "What skin concerns does this product target?"
+            ],
+            "Usage": [
+                "How should this product be applied?",
+                "When should this product be used in a skincare routine?",
+                "Can this product be used daily?"
+            ],
+            "Safety": [
+                "Is this product suitable for sensitive skin?",
+                "Are there any side effects associated with this product?",
+                "Can this product be used with other active ingredients?"
+            ],
+            "Purchase": [
+                "What is the price of this product?",
+                "Is this product worth the price?",
+                "Where can this product be purchased?"
+            ],
+            "Comparison": [
+                "How does this product compare to similar alternatives?",
+                "Is this better than other Vitamin C serums?",
+                "Who should choose this product over others?"
+            ]
+        }
+
+        return questions
