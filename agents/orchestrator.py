@@ -1,11 +1,14 @@
 """
-OrchestratorAgent
+OrchestratorAgent (Framework-backed)
 
-Responsibility:
-- Coordinate execution of all agents
-- Manage data flow
-- Produce final structured outputs
+Coordinates execution of LangChain-powered agents
+and assembles final structured outputs.
 """
+
+from dotenv import load_dotenv
+load_dotenv()
+
+from langchain_groq import ChatGroq
 
 from agents.product_parser import ProductParserAgent
 from agents.question_generator import QuestionGenerationAgent
@@ -18,10 +21,18 @@ from templates.comparison_template import ComparisonPageTemplate
 
 class OrchestratorAgent:
     def __init__(self):
+        # Initialize LLM once (framework-backed)
+        self.llm = ChatGroq(
+            model="llama-3.1-8b-instant",
+            temperature=0.7
+        )
+
+        # Initialize agents
         self.product_parser = ProductParserAgent()
-        self.question_generator = QuestionGenerationAgent()
+        self.question_generator = QuestionGenerationAgent(self.llm)
         self.content_logic = ContentLogicAgent()
 
+        # Templates
         self.faq_template = FAQTemplate()
         self.product_template = ProductPageTemplate()
         self.comparison_template = ComparisonPageTemplate()
@@ -31,7 +42,7 @@ class OrchestratorAgent:
         product_a = self.product_parser.parse(raw_product_a)
         product_b = self.product_parser.parse(raw_product_b)
 
-        # Step 2: Generate questions
+        # Step 2: Generate FAQs using LLM-backed agent
         questions = self.question_generator.generate(product_a)
 
         # Step 3: Generate reusable content blocks
@@ -45,7 +56,7 @@ class OrchestratorAgent:
             product_a, product_b
         )
 
-        # Step 4: Assemble pages using templates
+        # Step 4: Assemble pages
         faq_page = self.faq_template.assemble(questions)
 
         product_page = self.product_template.assemble([

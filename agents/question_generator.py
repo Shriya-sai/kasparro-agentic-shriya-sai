@@ -4,6 +4,8 @@ QuestionGenerationAgent (LLM-backed)
 Uses LangChain + Gemini to generate categorized customer questions.
 Includes memory and programmatic validation.
 """
+import json
+import re
 
 from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
@@ -28,12 +30,12 @@ class QuestionGenerationAgent:
         )
 
         self.prompt = PromptTemplate(
-            input_variables=["product_name", "category"],
+            input_variables=["input"],
             template="""
 You are an AI agent generating customer FAQ questions for a product.
 
-Product Name: {product_name}
-Category: {category}
+Product Information:
+{input}
 
 Generate at least 15 total customer questions, grouped strictly into the following categories:
 - Informational
@@ -65,18 +67,29 @@ JSON format:
         )
 
     def generate(self, product: dict) -> Dict:
-        response = self.chain.run(
-            product_name=product["name"],
-            category=product["category"]
+        input_text = f"Name: {product['name']}\nCategory: {product['category']}"
+
+        raw_response = self.chain.run(input=input_text)
+
+        # --- QUALITY GATE: Extract FAQ JSON only ---
+        json_match = re.search(
+           r'\{\s*"Informational"\s*:.*?\}\s*$',
+           raw_response,
+           re.DOTALL
         )
 
+        if not json_match:
+           raise ValueError("LLM did not return valid FAQ JSON block")
+
+        json_str = json_match.group(0)
+
         try:
-            data = FAQSchema.parse_raw(response)
+           data = FAQSchema.parse_raw(json_str)
         except ValidationError as e:
-            raise ValueError(f"Invalid FAQ JSON generated: {e}")
+           raise ValueError(f"Invalid FAQ JSON generated: {e}")
 
         total_questions = sum(len(v) for v in data.dict().values())
         if total_questions < 15:
-            raise ValueError("FAQ generation failed to meet minimum question count")
+           raise ValueError("FAQ generation failed to meet minimum question count")
 
         return data.dict()
