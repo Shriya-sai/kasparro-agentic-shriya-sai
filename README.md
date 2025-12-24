@@ -40,11 +40,11 @@ All agents are coordinated through an explicit orchestration layer rather than i
 
 The system uses **LangChain-backed agents** powered by a **Groq-hosted LLaMA 3.1 LLM** for content generation tasks.
 
-Key characteristics:
+### Key characteristics
 
 - Non-deterministic LLM outputs are constrained using:
-  - Prompt structure
-  - JSON schema validation (Pydantic)
+  - Structured prompts  
+  - JSON schema validation (Pydantic)  
   - Quality gates (minimum FAQ count enforcement)
 - Agents maintain conversational memory where appropriate
 - LLM usage is isolated to generation tasks; deterministic logic remains outside the model
@@ -83,6 +83,7 @@ kasparro-agentic-shriya-sai/
 ├── main.py # Entry point
 └── README.md
 
+
 ---
 
 ## 📦 Outputs
@@ -96,31 +97,47 @@ Running the system generates three structured outputs:
 All outputs are **CMS- and frontend-friendly** and designed for downstream consumption.
 
 ---
+
 ## 🧪 Testing & Validation
 
 The system is tested at the **pipeline level**, focusing on correctness, robustness, and reproducibility rather than isolated unit tests.
 
 ### End-to-End Execution Test
+
 The primary test is running the full orchestration pipeline:
 
+```bash
+python main.py
 
-## ▶️ How to Run
 
-### 1. Install dependencies
+Successful execution confirms:
+
+All agents are wired correctly
+
+Orchestration executes without errors
+
+LLM-backed and deterministic agents interact as expected
+
+Structured output artifacts are generated
+
+▶️ How to Run
+
+1. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
-### 2. Set environment variables
+2. Set environment variables
 ```bash
-GROQ_API_KEY=your_api_key_here
+Create a .env file:
 ```
-### 3. Run the system
+GROQ_API_KEY=your_api_key_here
+
+3. Run the system
 ```bash
 python main.py
 ```
+
 Successful execution will generate the output JSON files inside the outputs/ directory.
-
-
 
 🧩 Design Notes
 
