@@ -100,7 +100,7 @@ All outputs are **CMS- and frontend-friendly** and designed for downstream consu
 ## ▶️ How to Run
 
 ### 1. Install dependencies
-```bash
+
 pip install -r requirements.txt
 
 ### 2. Set environment variables
@@ -113,3 +113,13 @@ python main.py
 Successful execution will generate the output JSON files inside the outputs/ directory.
 
 
+
+🧩 Design Notes
+
+The system prioritizes clarity over cleverness
+
+Agents are intentionally small and composable
+
+Validation and failure handling are explicit
+
+The architecture is designed to be extended (additional agents, new templates, alternate LLMs)
