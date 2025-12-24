@@ -56,15 +56,13 @@ Structured JSON Outputs
 ## 📂 Project Structure
 
 kasparro-agentic-shriya-sai/
-│
-├── agents/ # Core agent logic
-├── templates/ # Page-level templates
-├── data/ # Raw input data
-├── outputs/ # Generated JSON outputs
-├── docs/ # System documentation
-├── main.py # Entry point
+├── agents/        # Core agent logic
+├── templates/     # Page-level templates
+├── data/          # Raw input data
+├── outputs/       # Generated JSON outputs
+├── docs/          # System documentation
+├── main.py        # Entry point
 └── README.md
-
 
 ---
 
