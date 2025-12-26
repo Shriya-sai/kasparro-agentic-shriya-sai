@@ -1,5 +1,17 @@
-langchain==0.2.6
-langchain-core==0.2.10
-langchain-groq==0.1.5
-pydantic==1.10.13
-python-dotenv==1.0.1
+# Core agent & orchestration framework
+langchain==0.3.0
+langchain-core>=0.3.75
+langgraph==0.6.11
+
+# LLM provider (Groq)
+langchain-groq==0.2.0
+groq>=0.4.1
+
+# Data validation & schemas
+pydantic==2.7.4
+
+# Environment variable management
+python-dotenv>=1.0.1
+
+# Utilities
+requests>=2.31.0
