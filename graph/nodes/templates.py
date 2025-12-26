@@ -1,18 +1,24 @@
 import json
+import os
 import logging
-from pathlib import Path
 
-OUTPUT_DIR = Path("outputs")
+OUTPUT_DIR = "outputs"
+
 
 def template_node(state: dict) -> dict:
     logging.info("Template agent started")
 
-    OUTPUT_DIR.mkdir(exist_ok=True)
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-    with open(OUTPUT_DIR / "faq.json", "w") as f:
-        json.dump(state["faqs"], f, indent=2)
+    outputs = state.get("outputs", {})
 
-    with open(OUTPUT_DIR / "product_page.json", "w") as f:
-        json.dump(state["product_page"], f, indent=2)
+    with open(f"{OUTPUT_DIR}/product_page.json", "w") as f:
+        json.dump(outputs.get("product_page", {}), f, indent=2)
+
+    with open(f"{OUTPUT_DIR}/faq.json", "w") as f:
+        json.dump(outputs.get("faq", {}), f, indent=2)
+
+    with open(f"{OUTPUT_DIR}/comparison_page.json", "w") as f:
+        json.dump(outputs.get("comparison_page", {}), f, indent=2)
 
     return state

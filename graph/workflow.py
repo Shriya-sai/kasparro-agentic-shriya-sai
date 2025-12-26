@@ -1,5 +1,5 @@
 from langgraph.graph import StateGraph, END
-from graph.state import AgentState
+from typing import TypedDict, Optional
 
 from graph.nodes.parser import parser_node
 from graph.nodes.faq_agent import faq_generation_node
@@ -7,8 +7,26 @@ from graph.nodes.validation import faq_validation_node
 from graph.nodes.content import content_node
 from graph.nodes.templates import template_node
 
+
+class GraphState(TypedDict):
+    product: dict
+    faqs: Optional[dict]
+    outputs: dict
+    errors: list[str]
+
+
+"""
+LangGraph State Schema:
+
+state = {
+    "product": dict,        # Parsed product data
+    "faqs": dict | None,    # Generated FAQs
+    "outputs": dict,        # Final JSON outputs
+    "errors": list[str]     # Collected errors
+}
+"""
 def build_graph():
-    graph = StateGraph(AgentState)
+    graph = StateGraph(GraphState)
 
     graph.add_node("parser", parser_node)
     graph.add_node("faq", faq_generation_node)

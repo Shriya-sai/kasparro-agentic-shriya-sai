@@ -2,7 +2,11 @@ import logging
 from graph.workflow import build_graph
 from data.product_input import PRODUCT_A
 
-logging.basicConfig(level=logging.INFO)
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(levelname)s:%(name)s:%(message)s"
+)
 
 def main():
     graph = build_graph()
