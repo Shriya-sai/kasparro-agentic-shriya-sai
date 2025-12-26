@@ -1,36 +1,22 @@
-"""
-Entry point for the Multi-Agent Content Generation System
-"""
+import logging
+from graph.workflow import build_graph
+from data.product_input import PRODUCT_A
 
-import json
-import os
-
-from data.product_input import PRODUCT_A, PRODUCT_B
-from agents.orchestrator import OrchestratorAgent
-
-
-def write_output(filename: str, data: dict):
-    os.makedirs("outputs", exist_ok=True)
-    path = os.path.join("outputs", filename)
-
-    with open(path, "w") as f:
-        json.dump(data, f, indent=2)
-
-    print(f"✅ Generated {filename}")
-
+logging.basicConfig(level=logging.INFO)
 
 def main():
-    orchestrator = OrchestratorAgent()
+    graph = build_graph()
 
-    results = orchestrator.run(
-        raw_product_a=PRODUCT_A,
-        raw_product_b=PRODUCT_B
-    )
+    initial_state = {
+        "product": PRODUCT_A,
+        "faqs": None,
+        "product_page": None,
+        "comparison_page": None,
+        "errors": []
+    }
 
-    write_output("faq.json", results["faq"])
-    write_output("product_page.json", results["product_page"])
-    write_output("comparison_page.json", results["comparison_page"])
-
+    graph.invoke(initial_state)
+    print("✅ Pipeline completed")
 
 if __name__ == "__main__":
     main()

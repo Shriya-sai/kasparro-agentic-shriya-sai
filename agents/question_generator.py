@@ -1,41 +1,37 @@
-"""
-QuestionGenerationAgent (LLM-backed)
+from dotenv import load_dotenv
+load_dotenv()
 
-Uses LangChain + Gemini to generate categorized customer questions.
-Includes memory and programmatic validation.
-"""
+from typing import Dict
 import json
 import re
 
-from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
-from langchain.memory import ConversationBufferMemory
+from langchain_groq import ChatGroq
 from pydantic import BaseModel, ValidationError
-from typing import List, Dict
 
 
 class FAQSchema(BaseModel):
-    Informational: List[str]
-    Usage: List[str]
-    Safety: List[str]
-    Purchase: List[str]
-    Comparison: List[str]
+    Informational: list[str]
+    Usage: list[str]
+    Safety: list[str]
+    Purchase: list[str]
+    Comparison: list[str]
 
 
 class QuestionGenerationAgent:
-    def __init__(self, llm):
-        self.memory = ConversationBufferMemory(
-            memory_key="chat_history",
-            return_messages=True
+    def __init__(self):
+        self.llm = ChatGroq(
+            model="llama-3.1-8b-instant",
+            temperature=0.7,
         )
 
         self.prompt = PromptTemplate(
-            input_variables=["input"],
+            input_variables=["product"],
             template="""
 You are an AI agent generating customer FAQ questions for a product.
 
-Product Information:
-{input}
+Product information:
+{product}
 
 Generate at least 15 total customer questions, grouped strictly into the following categories:
 - Informational
@@ -60,36 +56,28 @@ JSON format:
 """
         )
 
-        self.chain = LLMChain(
-            llm=llm,
-            prompt=self.prompt,
-            memory=self.memory
+        # LangChain 0.3 style runnable
+        self.chain = self.prompt | self.llm
+
+    def generate(self, product: Dict) -> Dict:
+        response = self.chain.invoke(
+            {"product": json.dumps(product, indent=2)}
         )
 
-    def generate(self, product: dict) -> Dict:
-        input_text = f"Name: {product['name']}\nCategory: {product['category']}"
+        text = response.content
 
-        raw_response = self.chain.run(input=input_text)
-
-        # --- QUALITY GATE: Extract FAQ JSON only ---
-        json_match = re.search(
-           r'\{\s*"Informational"\s*:.*?\}\s*$',
-           raw_response,
-           re.DOTALL
-        )
-
-        if not json_match:
-           raise ValueError("LLM did not return valid FAQ JSON block")
-
-        json_str = json_match.group(0)
+        # Extract JSON safely
+        match = re.search(r"\{.*\}", text, re.DOTALL)
+        if not match:
+            raise ValueError("LLM did not return valid JSON")
 
         try:
-           data = FAQSchema.parse_raw(json_str)
+            parsed = FAQSchema.model_validate_json(match.group())
         except ValidationError as e:
-           raise ValueError(f"Invalid FAQ JSON generated: {e}")
+            raise ValueError(f"Invalid FAQ JSON: {e}")
 
-        total_questions = sum(len(v) for v in data.dict().values())
-        if total_questions < 15:
-           raise ValueError("FAQ generation failed to meet minimum question count")
+        total = sum(len(v) for v in parsed.model_dump().values())
+        if total < 15:
+            raise ValueError("FAQ count < 15")
 
-        return data.dict()
+        return parsed.model_dump()

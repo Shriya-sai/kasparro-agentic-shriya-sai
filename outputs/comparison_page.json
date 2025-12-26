@@ -4,7 +4,7 @@
     "title": "Product Comparison",
     "comparison": {
       "product_a": {
-        "name": "GlowBoost Vitamin C Serum",
+        "name": "GlowBoost Vitamin C Serum 67",
         "price_inr": 699,
         "ingredients": [
           "Vitamin C",
@@ -17,7 +17,7 @@
         ]
       },
       "product_b": {
-        "name": "RadiantPlus Vitamin C Serum",
+        "name": "RadiantPlus Vitamin C Serum 99",
         "price_inr": 899,
         "ingredients": [
           "Vitamin C",

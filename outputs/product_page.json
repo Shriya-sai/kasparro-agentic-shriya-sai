@@ -1,37 +1,33 @@
 {
-  "page_type": "Product",
-  "sections": [
-    {
-      "title": "Product Overview",
-      "content": {
-        "name": "GlowBoost Vitamin C Serum",
-        "brand": "GlowBoost",
-        "category": "Skincare"
-      }
-    },
-    {
-      "title": "Key Benefits",
-      "items": [
-        "Brightens skin tone",
-        "Fades dark spots",
-        "Boosts collagen production"
-      ]
-    },
-    {
-      "title": "How to Use",
-      "instructions": "Apply 2\u20133 drops in the morning before sunscreen."
-    },
-    {
-      "title": "Safety & Side Effects",
-      "notes": "Mild tingling for sensitive skin.",
-      "skin_type": [
-        "Oily",
-        "Combination"
-      ]
-    },
-    {
-      "title": "Pricing",
-      "price_inr": 699
-    }
-  ]
+  "name": "GlowBoost Vitamin C Serum",
+  "faqs": {
+    "Informational": [
+      "What is GlowBoost Vitamin C Serum?",
+      "What are the key ingredients in GlowBoost Vitamin C Serum?",
+      "What benefits can I expect from using GlowBoost Vitamin C Serum?",
+      "What skin types is GlowBoost Vitamin C Serum suitable for?",
+      "Is GlowBoost Vitamin C Serum a product of a reputable brand?"
+    ],
+    "Usage": [
+      "How do I use GlowBoost Vitamin C Serum?",
+      "How many drops of GlowBoost Vitamin C Serum should I apply?",
+      "When should I apply GlowBoost Vitamin C Serum?",
+      "Can I use GlowBoost Vitamin C Serum at night?",
+      "Can I layer GlowBoost Vitamin C Serum with other skincare products?"
+    ],
+    "Safety": [
+      "Are there any potential side effects I should be aware of when using GlowBoost Vitamin C Serum?",
+      "Is GlowBoost Vitamin C Serum suitable for sensitive skin?",
+      "Can I use GlowBoost Vitamin C Serum if I have any allergies or sensitivities?"
+    ],
+    "Purchase": [
+      "Where can I buy GlowBoost Vitamin C Serum?",
+      "What is the price of GlowBoost Vitamin C Serum?",
+      "Does GlowBoost Vitamin C Serum come with a money-back guarantee?"
+    ],
+    "Comparison": [
+      "How does GlowBoost Vitamin C Serum compare to other vitamin C serums on the market?",
+      "Is GlowBoost Vitamin C Serum more effective than other products for brightening skin tone?"
+    ]
+  }
 }

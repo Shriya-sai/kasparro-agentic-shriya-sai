@@ -1,7 +1,4 @@
-"""
-Raw product input data.
-Represents external data fed into the system.
-"""
+# Raw input data provided to the system
 
 PRODUCT_A = {
     "name": "GlowBoost Vitamin C Serum",
