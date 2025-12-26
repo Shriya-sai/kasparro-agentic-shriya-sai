@@ -1,152 +1,153 @@
-# Kasparro Applied AI Engineer Challenge  
-## Multi-Agent Content Generation System
+Kasparro Applied AI Engineer Challenge
+LangGraph-based Multi-Agent Content Generation System
 
-This repository contains a **modular, agent-based content generation system** designed to transform raw product data into structured, reusable marketing content.
+This repository contains a LangGraph-orchestrated, agent-based content generation system that transforms raw product data into structured, reusable marketing outputs.
 
-The focus of this project is **system design, explicit orchestration, validation, and reusability** — not prompt-heavy or monolithic AI scripts.
+The system demonstrates real agent orchestration, explicit state management, validation, and controlled LLM usage, aligned with production-style applied AI systems.
 
----
+🎯 Objective
 
-## 🎯 Objective
+Design a production-oriented agentic content system that:
 
-Design a production-oriented **agentic content system** that:
+Uses a framework-based orchestration layer (LangGraph)
 
-- Uses clear agent boundaries  
-- Exposes reusable logic blocks  
-- Orchestrates execution explicitly  
-- Applies validation and quality gates  
-- Produces structured, deterministic outputs from non-deterministic LLMs  
+Defines clear agent responsibilities
 
----
+Passes and mutates explicit shared state
 
-## 🧠 System Overview
+Integrates LLM-based reasoning where appropriate
 
-The system is composed of multiple agents, each with a single responsibility:
+Applies validation and quality gates
 
-| Component | Description |
-|---------|-------------|
-| **ProductParserAgent** | Normalizes raw product input into a stable internal schema |
-| **QuestionGenerationAgent** | Uses a LangChain-backed LLM to generate categorized customer FAQs with schema validation |
-| **ContentLogicAgent** | Produces reusable, deterministic content blocks |
-| **TemplateAgents** | Assemble page-level outputs from reusable blocks |
-| **OrchestratorAgent** | Controls execution flow, agent coordination, and data passing |
-| **main.py** | Entry point for end-to-end execution |
+Produces structured, deterministic outputs from non-deterministic LLMs
 
-All agents are coordinated through an explicit orchestration layer rather than implicit chaining.
+🧠 System Overview
 
----
+The system is composed of multiple agents, each implemented as a LangGraph node with a single responsibility:
 
-## 🤖 LLM & Agent Architecture
+Component	Responsibility
+ProductParserAgent	Normalizes raw product input into a stable internal schema
+QuestionGenerationAgent	Uses a Groq-hosted LLaMA 3.1 LLM (via LangChain) to generate categorized customer FAQs
+ValidationAgent	Enforces schema validity and minimum FAQ count constraints
+ContentLogicAgent	Produces reusable, deterministic content blocks
+TemplateAgent	Assembles page-level JSON outputs
+Orchestrator (LangGraph)	Controls execution flow, state transitions, and agent coordination
+main.py	Entry point for end-to-end execution
 
-The system uses **LangChain-backed agents** powered by a **Groq-hosted LLaMA 3.1 LLM** for content generation tasks.
+All agents operate on a shared LangGraph state object, ensuring explicit data flow and traceability.
 
-### Key characteristics
+🤖 LLM & Agent Architecture
 
-- Non-deterministic LLM outputs are constrained using:
-  - Structured prompts  
-  - JSON schema validation (Pydantic)  
-  - Quality gates (minimum FAQ count enforcement)
-- Agents maintain conversational memory where appropriate
-- LLM usage is isolated to generation tasks; deterministic logic remains outside the model
+Framework: LangGraph (stateful agent orchestration)
 
-This design mirrors real-world applied AI systems where **LLMs are components, not the system itself**.
+LLM Integration: LangChain + Groq (LLaMA 3.1)
 
----
+LLM Usage Scope: Limited strictly to generative tasks (FAQ creation)
 
-## 🔁 Execution Flow
+Deterministic Logic: Validation, enforcement, templating, and orchestration are handled outside the LLM
 
+Output Control Mechanisms
+
+Non-deterministic LLM outputs are constrained using:
+
+Structured prompts
+
+Pydantic schema validation
+
+Minimum question count enforcement
+
+Explicit failure handling in the graph
+
+This mirrors real-world applied AI systems where LLMs are components, not the system itself.
+
+🔁 Execution Flow
 Raw Product Input
-↓
+        ↓
 ProductParserAgent
-↓
-Internal Product Schema
-↓
+        ↓
 QuestionGenerationAgent (LLM-backed)
-↓
+        ↓
+ValidationAgent (Schema + Quality Gates)
+        ↓
 ContentLogicAgent (Reusable Blocks)
-↓
-TemplateAgents
-↓
+        ↓
+TemplateAgent
+        ↓
 Structured JSON Outputs
 
----
 
-## 📂 Project Structure
+The flow is implemented as a LangGraph state graph, not a sequential Python script.
 
+📂 Project Structure
 kasparro-agentic-shriya-sai/
 │
-├── agents/ # Core agent logic
-├── templates/ # Page-level templates
-├── data/ # Raw input data
-├── outputs/ # Generated JSON outputs
-├── docs/ # System documentation
-├── main.py # Entry point
+├── agents/        # Agent implementations
+├── graph/         # LangGraph workflow and nodes
+├── templates/     # Output templates
+├── data/          # Raw product input data
+├── outputs/       # Generated JSON outputs
+├── docs/          # Documentation
+├── main.py        # Entry point
 └── README.md
 
+📦 Outputs
 
----
+Running the system generates:
 
-## 📦 Outputs
+faq.json — Categorized customer FAQs
 
-Running the system generates three structured outputs:
+product_page.json — Product overview content
 
-- `faq.json` — Categorized customer FAQs  
-- `product_page.json` — Product overview and details  
-- `comparison_page.json` — Product A vs Product B comparison  
+comparison_page.json — Product comparison output
 
-All outputs are **CMS- and frontend-friendly** and designed for downstream consumption.
-
-LLM failures currently fail fast to surface quality issues; retry policies can be added at the orchestration layer if required.
-
----
-
-## 🧪 Testing & Validation
-
-The system is tested at the **pipeline level**, focusing on correctness, robustness, and reproducibility rather than isolated unit tests.
-
-### End-to-End Execution Test
-
-The primary test is running the full orchestration pipeline:
-
-```bash
-python main.py
-
-
-Successful execution confirms:
-
-All agents are wired correctly
-
-Orchestration executes without errors
-
-LLM-backed and deterministic agents interact as expected
-
-Structured output artifacts are generated
+All outputs are JSON-only, CMS- and frontend-ready.
 
 ▶️ How to Run
-
 1. Install dependencies
-```bash
 pip install -r requirements.txt
-```
+
 2. Set environment variables
-```bash
-Create a .env file:
-```
-GROQ_API_KEY=your_api_key_here
+export GROQ_API_KEY=your_api_key_here
 
-3. Run the system
-```bash
+
+(or use a .env file)
+
+3. Run the pipeline
 python main.py
-```
 
-Successful execution will generate the output JSON files inside the outputs/ directory.
+
+Successful execution logs each agent step and ends with:
+
+✅ Pipeline completed
+
+🧪 Testing & Validation
+
+The system is tested at the pipeline level, focusing on correctness, robustness, and reproducibility.
+
+Validation includes:
+
+Pydantic schema validation of LLM outputs
+
+Enforcement of minimum FAQ count
+
+Controlled failure propagation through LangGraph state
+
+Deterministic output structure
+
+This approach reflects real applied AI systems, where integration correctness matters more than isolated unit tests.
 
 🧩 Design Notes
 
 The system prioritizes clarity over cleverness
 
-Agents are intentionally small and composable
+Agents are small, composable, and framework-backed
 
-Validation and failure handling are explicit
+Orchestration is explicit and inspectable
 
-The architecture is designed to be extended (additional agents, new templates, alternate LLMs)
+The architecture is designed for extension (new agents, branching flows, alternate LLMs)
+
+✅ Status
+
+This implementation uses real LangGraph orchestration, real LLM execution, and explicit validation, addressing all Phase 1 evaluation concerns.
+
+End of README
